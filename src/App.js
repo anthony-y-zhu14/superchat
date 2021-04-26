@@ -5,6 +5,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { Fab, Button } from '@material-ui/core';
 
 var firebaseConfig = {
   apiKey: "AIzaSyBOgLPwBnSvo_QWS1A9Vy5EX--HNqqzYI4",
@@ -19,7 +20,7 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 
-function App() {
+export default function App() {
   const [user] = useAuthState(auth);
   return (
     <div className="App">
@@ -38,15 +39,14 @@ function SignIn() {
   }
   return(
     <>
-    <button onClick={signInWithGoogle}>Sign in with Google</button>
-    <p>Do not violate the community guidelines or you will be banned for life!</p>
+      <Fab onClick={signInWithGoogle} color='primary' variant='extended'>Sign in with Google</Fab>
     </>
   )
 }
 
 function SignOut() {
   return auth.currentUser && (
-    <button onClick={()=>auth.signOut()}>Sign Out</button>
+    <Button onClick={()=>auth.signOut()} variant='outlined' color='primary'>Sign Out</Button>
   )
 }
 
@@ -73,7 +73,7 @@ function ChatRoom() {
     </div>
     <form onSubmit={sendMessage}>
       <input value={formValue} onChange={(e) => setFormValue(e.target.value)}></input>
-      <button type="submit">Send</button>
+      <Button type="submit" variant='outlined' color='primary'>Send</Button>
     </form>
     </>
   )
@@ -89,5 +89,3 @@ function ChatMessage(props) {
     </div>
   )
 }
-
-export default App;
