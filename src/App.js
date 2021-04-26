@@ -5,7 +5,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { Fab, Button } from '@material-ui/core';
+import { Fab, Button, AppBar, Toolbar, Typography } from '@material-ui/core';
 
 var firebaseConfig = {
   apiKey: "AIzaSyBOgLPwBnSvo_QWS1A9Vy5EX--HNqqzYI4",
@@ -24,7 +24,12 @@ export default function App() {
   const [user] = useAuthState(auth);
   return (
     <div className="App">
-      <header><SignOut /></header>
+      <AppBar position="static">
+        <Toolbar>
+          {auth.currentUser && <Button color="inherit" onClick={()=>auth.signOut()}>Sign Out</Button>}
+          {!auth.currentUser && <Typography variant="h6">Super Chat</Typography>}
+        </Toolbar>
+      </AppBar>
       <section>
         {user ? <ChatRoom /> : <SignIn />}
       </section>
@@ -41,12 +46,6 @@ function SignIn() {
     <>
       <Fab onClick={signInWithGoogle} color='primary' variant='extended'>Sign in with Google</Fab>
     </>
-  )
-}
-
-function SignOut() {
-  return auth.currentUser && (
-    <Button onClick={()=>auth.signOut()} variant='outlined' color='primary'>Sign Out</Button>
   )
 }
 
